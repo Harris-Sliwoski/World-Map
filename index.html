@@ -59,7 +59,7 @@
         font-size: 14px;
       }
 
-      a.usa-link {
+      a.description-link {
         color: #3b729f;
         background-color: #ffffff;
         padding: 2px;
@@ -67,7 +67,7 @@
         border-radius: 5px;
         border: 2px;
       }
-      a.usa-link:hover {
+      a.description-link:hover {
         color: #ffffff;
         text-decoration: underline;
         background-color: #3b729f;
@@ -98,7 +98,6 @@
     </style>
   </head>
   <body>
-    <!-- <div id="map-zoom-wrapper"> -->
     <div id="zoom-buttons">
       <button onclick="zoomIn()">
         <img
@@ -114,7 +113,6 @@
       </button>
     </div>
     <div id="map"></div>
-    <!-- </div> -->
 
     <div class="popup" id="popup"></div>
 
@@ -159,9 +157,7 @@
       }
 
       // Load GeoJSON data
-      d3.json(
-        "countries.geojson"
-      ).then((data) => {
+      d3.json("countries.geojson").then((data) => {
         svg
           .selectAll("path")
           .data(data.features)
@@ -181,12 +177,16 @@
         $("#popup").css("display", "none");
 
         const countryName = d.properties.name;
-        
 
         var detailsValue = "";
         if (d.properties.legal) {
           detailsValue = d.properties.legal;
         }
+
+        if (d.properties.detailsLink) {
+          detailsValue += "<hr>" + d.properties.detailsLink;
+        }
+
         if (d.properties.name) {
           $("#popup").html(
             '<p class="popup-title">' +
@@ -241,17 +241,17 @@
         // Implement your logic to determine color based on attribute
         // Example:
         if (attribute === "Illegal") {
-          return "#ce623e";
+          return "#110C4E";
         } else if (attribute === "Highly restrictive regime") {
-          return "#f2f1f0";
+          return "#677288";
         } else if (attribute === "Strict regime") {
           return "#A84A25";
         } else if (attribute === "Moderate regime") {
           return "#F9BF48";
         } else if (attribute === "Progressive regime") {
-          return "#110C4E";
+          return "#ce623e";
         } else if (attribute === "Recreational") {
-          return "#677288";
+          return "#4a7a53";
         } else {
           return "#cccccc";
         }
